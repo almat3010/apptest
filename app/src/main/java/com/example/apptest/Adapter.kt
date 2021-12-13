@@ -1,10 +1,12 @@
 package com.example.apptest
 
+import android.icu.number.NumberFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
@@ -23,13 +25,17 @@ class Adapter(private val tags: List<String>) : RecyclerView.Adapter<Adapter.MyV
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val tag = tags[position]
-        holder.text.text = "tag"
-        Picasso.get().load(tag).into(holder.img)
+        if (tag.contains("https")){
+            Picasso.get().load(tag).placeholder(R.drawable.abc_vector_test).into(holder.img)
+        }
+        else{
+            Picasso.get().load(tag.replace("http","https")).placeholder(R.drawable.abc_vector_test).into(holder.img)
+        }
+        val size = data.mapSize[tag]
+        holder.text.text = "url -$tag, size - $size kb"
     }
-
 
     override fun getItemCount(): Int {
         return tags.size
     }
-
 }

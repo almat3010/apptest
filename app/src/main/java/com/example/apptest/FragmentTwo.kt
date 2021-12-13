@@ -27,13 +27,9 @@ class FragmentTwo : Fragment() {
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerView)
         recycler.layoutManager = LinearLayoutManager(this.context)
-
-
-        val arr: String? = arguments?.getString("myArg")
-
-        Log.i("myArg", arr.toString())
-        if (arr != null) {
-            recycler.adapter = Adapter(arr.split(",").toTypedArray().toList())
+        if (data.data.value != null) {
+            val tmp :List<String> = data.data.value!!
+            recycler.adapter = Adapter(tmp)
         }
     }
 }
